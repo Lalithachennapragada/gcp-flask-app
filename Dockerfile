@@ -1,6 +1,19 @@
-FROM python:3.9-slim
+# Dockerfile
+ 
+# Base image
+FROM python:3.10-slim
+ 
+# Set working directory
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
+ 
+# Copy files
+COPY app.py .
+ 
+# Install Flask
+RUN pip install Flask
+ 
+# Expose port
+EXPOSE 5000
+ 
+# Run app
 CMD ["python", "app.py"]
