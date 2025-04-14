@@ -1,0 +1,15 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/supple-gearbox-447219-d0/flask-app-repo/flask-app:latest', '.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-central1-docker.pkg.dev/supple-gearbox-447219-d0/flask-app-repo/flask-app:latest']
+
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'flask-app',
+         '--image', 'us-central1-docker.pkg.dev/supple-gearbox-447219-d0/flask-app-repo/flask-app:latest',
+         '--region', 'us-central1',
+         '--platform', 'managed',
+         '--allow-unauthenticated',
+         '--vpc-connector', 'default']
